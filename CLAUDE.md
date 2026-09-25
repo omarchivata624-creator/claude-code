@@ -1,155 +1,172 @@
-# Platziflix - Proyecto Multi-plataforma
+# Elite Esco — Agencia de Landing Pages
 
-## Arquitectura del Sistema
+## Identidad de la Agencia
 
-Platziflix es una plataforma de cursos online con arquitectura multi-plataforma que incluye:
-- **Backend**: API REST con FastAPI + PostgreSQL
-- **Frontend**: Aplicación web con Next.js 15
-- **Mobile**: Apps nativas Android (Kotlin) + iOS (Swift)
+**Nombre**: Elite Esco  
+**Propósito**: Creación de landing pages de alto impacto para empresas cliente.  
+**Mercado principal**: Colombia  
+**Modelo de negocio**: Cada landing page que se construye para un cliente incluye pasarela de pagos integrada.
 
-## Stack Tecnológico
+---
 
-### Backend (FastAPI/Python)
-- **Framework**: FastAPI
-- **Base de datos**: PostgreSQL 15
-- **ORM**: SQLAlchemy 2.0
-- **Migraciones**: Alembic
-- **Container**: Docker + Docker Compose
-- **Gestión dependencias**: UV
-- **Puerto**: 8000
+## Stack Tecnológico Recomendado
 
-### Frontend (Next.js)
-- **Framework**: Next.js 15 (App Router)
-- **React**: 19.0
-- **Lenguaje**: TypeScript
-- **Estilos**: SCSS + CSS Modules
-- **Testing**: Vitest + React Testing Library
-- **Fonts**: Geist Sans & Geist Mono
+### Framework & Frontend
+- **Next.js 15** (App Router) — SSR/SSG para SEO óptimo, crítico en landing pages
+- **React 19** + **TypeScript** — base sólida y tipado estricto
+- **Tailwind CSS** — velocidad de desarrollo + consistencia visual
+- **Framer Motion** — animaciones y microinteracciones que convierten
+- **shadcn/ui** — componentes accesibles y personalizables
 
-### Mobile
-- **Android**: Kotlin + Jetpack Compose + Retrofit
-- **iOS**: Swift + SwiftUI + Repository Pattern
+### CMS / Gestión de contenido
+- **Sanity.io** — CMS headless flexible, el cliente edita su propia landing sin tocar código
+- **Contentful** (alternativa) — si el cliente prefiere interfaz más tradicional
 
-## Estructura del Proyecto
+### Formularios y Conversión
+- **React Hook Form** + **Zod** — validación de formularios robusta
+- **HubSpot Forms** (opcional) — si el cliente ya usa HubSpot como CRM
+- **Resend** — envío de emails transaccionales (confirmaciones, leads)
+
+### Analytics & Tracking
+- **Google Analytics 4** — métricas estándar
+- **Meta Pixel** — tracking para campañas de Facebook/Instagram
+- **Hotjar** o **Microsoft Clarity** — mapas de calor y grabación de sesiones
+- **Vercel Analytics** — Web Vitals en tiempo real
+
+### Hosting & Infraestructura
+- **Vercel** — deploy automático, CDN global, dominio personalizado
+- **Cloudflare** — DNS + protección DDoS + caché adicional
+
+---
+
+## Pasarelas de Pago — Colombia
+
+Cada landing page de Elite Esco debe incluir una pasarela de pagos. Opciones por perfil de cliente:
+
+### 1. Wompi (Recomendada — Bancolombia)
+- **Ideal para**: PyMEs y startups colombianas
+- **Métodos**: Tarjeta crédito/débito, PSE, Nequi, Bancolombia QR, efectivo (Efecty)
+- **Integración**: SDK JS o API REST
+- **Comisión**: ~2.9% + $900 COP por transacción
+- **Docs**: https://docs.wompi.co
+- **Ventaja**: Respaldo de Bancolombia, alta confianza del usuario colombiano
+
+### 2. PayU Colombia
+- **Ideal para**: Empresas medianas y grandes con volumen alto
+- **Métodos**: Tarjetas, PSE, Nequi, Daviplata, Efecty, Baloto
+- **Integración**: SDK, API REST, formulario hosted
+- **Comisión**: Variable según contrato (~3.49%)
+- **Ventaja**: Líder histórico en LatAm, soporte robusto
+
+### 3. Epayco
+- **Ideal para**: Emprendedores y pequeños negocios
+- **Métodos**: Tarjetas, PSE, Efecty, Baloto, Nequi
+- **Comisión**: 2.99% + IVA
+- **Ventaja**: Fácil integración, bajo costo de entrada
+
+### 4. Mercado Pago Colombia
+- **Ideal para**: Clientes que ya venden en Mercado Libre o con alta adopción de billetera digital
+- **Métodos**: Tarjetas, PSE, efectivo, QR
+- **Ventaja**: Red amplia, checkout reutilizable
+
+### 5. Stripe (con localización Colombia)
+- **Ideal para**: Clientes con ventas internacionales además de Colombia
+- **Nota**: Requiere empresa con cuenta bancaria que acepte USD; complementar con Wompi para pagos locales
+
+---
+
+## Estructura de Proyecto — Landing Page Tipo
 
 ```
-claude-code/
-├── Backend/           # API FastAPI + PostgreSQL
-├── Frontend/          # Next.js 15 App
-└── Mobile/
-    ├── PlatziFlixAndroid/  # Kotlin App
-    └── PlatziFlixiOS/      # Swift App
+elite-esco-[cliente]/
+├── app/
+│   ├── (landing)/
+│   │   ├── page.tsx          # Landing principal
+│   │   └── gracias/page.tsx  # Página de confirmación post-pago
+│   ├── api/
+│   │   ├── pagos/route.ts    # Webhook pasarela de pagos
+│   │   └── leads/route.ts    # Captura de leads
+│   └── layout.tsx
+├── components/
+│   ├── Hero.tsx
+│   ├── Beneficios.tsx
+│   ├── Testimonios.tsx
+│   ├── Precios.tsx
+│   ├── CTA.tsx
+│   └── checkout/
+│       └── BotonPago.tsx     # Integración pasarela
+├── lib/
+│   ├── wompi.ts              # Utilidades pasarela
+│   └── analytics.ts
+├── public/
+└── CLAUDE.md
 ```
 
-## Modelo de Datos
+---
 
-### Entidades Principales
-- **Course**: Cursos (name, description, thumbnail, slug)
-- **Teacher**: Profesores
-- **Lesson**: Lecciones de un curso
-- **Class**: Clases individuales de una lección
+## Secciones Estándar de una Landing Page Elite Esco
 
-### Relaciones
-- Course ↔ Teacher (Many-to-Many via course_teachers)
-- Course → Lesson (One-to-Many)
-- Lesson → Class (One-to-Many)
+1. **Hero** — Propuesta de valor clara + CTA principal
+2. **Problema/Dolor** — Conectar con el usuario
+3. **Solución / Beneficios** — Qué ofrece el cliente
+4. **Cómo funciona** — Pasos simples (3–5 pasos)
+5. **Prueba social** — Testimonios, logos, métricas
+6. **Precios** — Tabla de planes o precio único
+7. **FAQ** — Objeciones frecuentes
+8. **CTA final** — Llamado a la acción con urgencia
+9. **Footer** — Políticas, contacto, redes
 
-## API Endpoints
+---
 
-- `GET /` - Bienvenida
-- `GET /health` - Health check + DB connectivity
-- `GET /courses` - Lista todos los cursos
-- `GET /courses/{slug}` - Detalle de curso por slug
+## Variables de Entorno Requeridas por Proyecto
 
-## Comandos de Desarrollo
+```env
+# Pasarela de pagos (Wompi ejemplo)
+WOMPI_PUBLIC_KEY=
+WOMPI_PRIVATE_KEY=
+WOMPI_EVENTS_SECRET=
 
-### Backend
-```bash
-cd Backend
-make start        # Iniciar Docker Compose
-make stop         # Detener containers
-make migrate      # Ejecutar migraciones
-make seed         # Poblar datos de prueba
-make logs         # Ver logs
+# Email
+RESEND_API_KEY=
+
+# Analytics
+NEXT_PUBLIC_GA_ID=
+NEXT_PUBLIC_META_PIXEL_ID=
+
+# CMS (si aplica)
+SANITY_PROJECT_ID=
+SANITY_DATASET=
+SANITY_TOKEN=
 ```
 
-### Frontend
-```bash
-cd Frontend
-yarn dev          # Servidor de desarrollo
-yarn build        # Build de producción
-yarn test         # Ejecutar tests
-yarn lint         # Linter
-```
+---
 
-## URLs del Sistema
+## Convenciones de Desarrollo
 
-- **Backend API**: http://localhost:8000
-- **Frontend Web**: http://localhost:3000
-- **API Docs**: http://localhost:8000/docs (FastAPI Swagger)
+- **Naming**: camelCase en JS/TS, kebab-case en rutas y archivos de componentes
+- **Commits**: Convencional Commits (`feat:`, `fix:`, `chore:`)
+- **Branch por cliente**: `feat/cliente-[nombre]`
+- **Testing**: Vitest + Playwright para flujo de pago crítico
+- **SEO**: `generateMetadata` en cada page.tsx, Open Graph, sitemap.xml
+- **Performance**: Core Web Vitals > 90 en Lighthouse antes de entregar
 
-## Base de Datos
+---
 
-### Configuración Docker
-- **Usuario**: platziflix_user
-- **Password**: platziflix_password
-- **Database**: platziflix_db
-- **Puerto**: 5432
+## Proceso de Entrega a Cliente
 
-### Migraciones
-- Ubicación: `Backend/app/alembic/versions/`
-- Comando crear: `make create-migration`
-- Comando aplicar: `make migrate`
+1. Briefing + definición de pasarela de pagos
+2. Diseño en Figma (aprobación cliente)
+3. Desarrollo (Next.js + pasarela)
+4. Pruebas de pago en sandbox
+5. Deploy en Vercel + dominio del cliente
+6. Capacitación en CMS (si aplica)
+7. Entrega de accesos y documentación
 
-## Funcionalidades Implementadas
+---
 
-- ✅ Catálogo de cursos con grid estilo Netflix
-- ✅ Detalle de cursos (profesores, lecciones, clases)
-- ✅ Navegación por slug SEO-friendly
-- ✅ Reproductor de video integrado
-- ✅ Health checks de API y DB
-- ✅ Apps móviles nativas (Android + iOS)
-- ✅ Testing en todos los componentes
+## Notas Importantes
 
-## Patrones de Desarrollo
-
-### Backend
-- **Arquitectura**: Service Layer Pattern
-- **Dependency Injection**: FastAPI Dependencies
-- **Database**: Repository Pattern con SQLAlchemy
-
-### Frontend
-- **Routing**: Next.js App Router
-- **Data Fetching**: Server Components + fetch
-- **Styling**: CSS Modules + SCSS
-- **Testing**: Component testing con Vitest
-
-### Mobile
-- **Android**: MVVM + Jetpack Compose
-- **iOS**: SwiftUI + Repository + Mapper Pattern
-
-## Consideraciones de Desarrollo
-
-1. **Docker obligatorio** para el backend (DB + API)
-2. **TypeScript strict** en Frontend
-3. **Testing requerido** para nuevas funcionalidades
-4. **Migraciones automáticas** para cambios de DB
-5. **Convenciones de naming**: snake_case (Python), camelCase (JS/TS), PascalCase (Swift/Kotlin)
-6. **API REST** como única fuente de datos para Frontend/Mobile
-
-## Comandos Útiles
-
-```bash
-# Desarrollo completo
-cd Backend && make start    # Iniciar backend
-cd Frontend && yarn dev     # Iniciar frontend
-
-# Reset completo de datos
-cd Backend && make seed-fresh
-
-# Ver logs de todos los servicios
-cd Backend && make logs
-```
-
-Esta memoria contiene toda la información necesaria para continuar el desarrollo del proyecto Platziflix.
-- Cualquier comando que necesites ejecutar para el Backend debe ser dentro del contenedor de docker API, antes de ejecutarlo certifica que esté funcionando el contenedor y revisa el archivo makefile con los comandos que existen y úsalos
+- Siempre validar el webhook de la pasarela con firma criptográfica antes de procesar
+- Las políticas de tratamiento de datos (Ley 1581 de 2012 — Colombia) son obligatorias en toda landing
+- Incluir política de privacidad y términos y condiciones como páginas separadas
+- Toda landing debe tener SSL (Vercel lo provee automáticamente)
