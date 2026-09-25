@@ -1,3 +1,14 @@
+# Contexto del Usuario
+
+## Agencia: Elite Esco
+
+El usuario dirige una agencia llamada **Elite Esco**, especializada en la **creación de landing pages** para empresas cliente.
+
+- **Servicio principal**: Diseño y desarrollo de landing pages como entregable para clientes
+- **Modelo de negocio**: Agencia B2B — se trabaja para empresas, no usuarios finales directos
+
+---
+
 # Platziflix - Proyecto Multi-plataforma
 
 ## Arquitectura del Sistema
